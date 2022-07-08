@@ -1,0 +1,26 @@
+Get by id = http://localhost:8081/api/v1/user/1
+
+Get all = http://localhost:8081/api/v1/user/
+
+Get by name = http://localhost:8081/api/v1/user/1
+
+Delete = http://localhost:8081/api/v1/pets/1
+
+PUT = http://localhost:8081/api/v1/user/1
+
++
+
+ {
+    "id": 1,
+    "username": "admin",
+    "password": "123456",
+    "pets": [
+      {
+        "id": 3,
+        "nickName": "acho",
+        "birthDay": "2012-01-01 18:10",
+        "sex": "GIRL",
+        "user": 1
+      }
+    ]
+  }

@@ -1,14 +1,15 @@
 package com.example.artpltesttask02.controller;
 
-import com.example.artpltesttask02.entity.Pets;
-import com.example.artpltesttask02.entity.User;
+import com.example.artpltesttask02.entity.Pet;
+import com.example.artpltesttask02.entity.Sex;
 import com.example.artpltesttask02.service.PetsService;
-import com.example.artpltesttask02.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/")
@@ -22,31 +23,32 @@ public class PetsController {
     }
 
     @GetMapping(value = "pets")
-    public List<Pets> getPetsAll() {
+    public List<Pet> getPetsAll() {
         return petsService.findAllBy();
     }
 
+
     @GetMapping(value = "pets/{id}")
-    public Pets getPetsAllById(@PathVariable Long id) {
-        return petsService.findAllById(id);
+    public Optional<Pet> getPetsAllById(@PathVariable Long id) {
+        return  petsService.findAllById(id);
     }
 
     @PostMapping(value = "pets")
-    public Pets savePets(@RequestBody Pets pets) {
+    public Pet savePets(@RequestBody Pet pets) {
         return petsService.save(pets);
     }
 
     @PutMapping("pets/{id}")
-    public Pets updatePets(
-            @PathVariable("id") Pets petsFromDb,
-            @RequestBody Pets pets
+    public Pet updatePets(
+            @PathVariable("id") Pet petsFromDb,
+            @RequestBody Pet pets
     ) {
         BeanUtils.copyProperties(pets, petsFromDb, "id");
         return petsService.save(petsFromDb);
     }
 
     @DeleteMapping("pets/{id}")
-    public void removePets(@PathVariable("id") Pets pets) {
+    public void removePets(@PathVariable("id") Pet pets) {
         petsService.delete(pets);
     }
 

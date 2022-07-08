@@ -2,10 +2,12 @@ package com.example.artpltesttask02.controller;
 
 import com.example.artpltesttask02.entity.User;
 import com.example.artpltesttask02.service.UserService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/")
@@ -18,18 +20,38 @@ public class UserController {
     }
 
 
-    @GetMapping(value = "users")
+    @GetMapping(value = "user")
     public List<User> getUsersAll() {
         return userService.findAllBy();
     }
 
-    @GetMapping(value = "users/{id}")
-    public User getPetsByUser(@PathVariable("id") Long id) {
-        return userService.findAllById(id);
+    @GetMapping(value = "user/{id}")
+    public Optional<User> getById(@PathVariable Long id) {
+        return userService.findById(id);
     }
 
-    @PostMapping(value = "users")
+    @GetMapping(value = "check/{name}")
+    public Optional<User> existsByUsername(@PathVariable String name) {
+        return userService.existsUserByUsername(name);
+    }
+
+    @PostMapping(value = "user")
     public User saveUsers(@RequestBody User user) {
         return userService.save(user);
     }
+
+    @PutMapping("user/{id}")
+    public User updateUser(
+            @PathVariable("id") User userFromDb,
+            @RequestBody User user
+    ) {
+        BeanUtils.copyProperties(user, userFromDb, "id");
+        return userService.save(userFromDb);
+    }
+
+    @DeleteMapping("user/{id}")
+    public void removeUser(@PathVariable("id") User user) {
+        userService.delete(user);
+    }
+
 }

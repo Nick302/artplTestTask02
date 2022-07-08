@@ -1,17 +1,16 @@
 package com.example.artpltesttask02.service;
 
-import com.example.artpltesttask02.entity.Pets;
-import com.example.artpltesttask02.entity.User;
+import com.example.artpltesttask02.entity.Pet;
+import com.example.artpltesttask02.entity.Sex;
 import com.example.artpltesttask02.repository.PetsRepository;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
-@Data
 public class PetsService {
     private final PetsRepository petsRepository;
 
@@ -26,36 +25,26 @@ public class PetsService {
      * - получить детали любого животного по id.
      */
 
-   public List<Pets> findAllBy(){
+    public List<Pet> findAllBy() {
         return petsRepository.findAllBy();
     }
 
-    public Pets findAllById(Long id){
-       return petsRepository.findAllById(id);
+    public Optional<Pet> findAllById(Long id) {
+        return petsRepository.findAllById(id);
     }
 
-    public List<Pets> findAllBySex(String sex){
-       return findAllBySex(sex);
-    }
-
-    public List<Pets> findAllByBirthDay(Date date){
-       return findAllByBirthDay(date);
-    }
-
-    public Pets findByNickName(String name){
-       return petsRepository.findByNickName(name);
-    }
-
-    public void delete(Pets entity){
+    public void delete(Pet entity) {
         petsRepository.delete(entity);
     }
 
-    public <S extends Pets> S save(S entity){
+    public <S extends Pet> S save(S entity) {
         return petsRepository.save(entity);
     }
 
-    public boolean existsByNickName(String name) // - Ќе зарегистрированный пользователь должен иметь возможность проверить доступность имени через сервис (валидации).
-    {
-        return existsByNickName(name);
+
+
+    public PetsRepository getPetsRepository() {
+        return petsRepository;
     }
+
 }
