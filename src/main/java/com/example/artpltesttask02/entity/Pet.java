@@ -22,7 +22,7 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "nickname", unique = true)
+    @Column(name = "nickname")
     @Min(2)
     @Max(15)
     @NotBlank

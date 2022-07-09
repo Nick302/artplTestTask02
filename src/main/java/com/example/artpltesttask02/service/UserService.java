@@ -3,6 +3,7 @@ package com.example.artpltesttask02.service;
 import com.example.artpltesttask02.entity.User;
 import com.example.artpltesttask02.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private PasswordEncoder encoder;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+        this.encoder = encoder;
     }
 
     public List<User> findAllBy() {
@@ -31,12 +34,13 @@ public class UserService {
     }
 
     public <S extends User> S save(S entity) {
+        entity.setPassword(encoder.encode(entity.getPassword()));
         return userRepository.save(entity);
     }
 
-    public Optional<User> existsUserByUsername(String username) // - Ќе зарегистрированный пользователь должен иметь возможность проверить доступность имени через сервис (валидации).
+    public boolean existsByUsername(String username)
     {
-        return userRepository.existsUserByUsername(username);
+        return userRepository.existsByUsername(username);
     }
 
     public UserRepository getUserRepository() {

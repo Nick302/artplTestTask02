@@ -6,9 +6,17 @@ Get by name = http://localhost:8081/api/v1/user/1
 
 Delete = http://localhost:8081/api/v1/pets/1
 
+POST = http://localhost:8081/api/v1/user/
+
+ {
+    "username": "admins",
+    "password": "1234561",
+    "pets": []
+  }
+
 PUT = http://localhost:8081/api/v1/user/1
 
-+
+
 
  {
     "id": 1,

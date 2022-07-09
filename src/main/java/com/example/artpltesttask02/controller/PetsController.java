@@ -2,6 +2,7 @@ package com.example.artpltesttask02.controller;
 
 import com.example.artpltesttask02.entity.Pet;
 import com.example.artpltesttask02.entity.Sex;
+import com.example.artpltesttask02.exception.NotFoundException;
 import com.example.artpltesttask02.service.PetsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,8 +31,11 @@ public class PetsController {
 
     @GetMapping(value = "pets/{id}")
     public Optional<Pet> getPetsAllById(@PathVariable Long id) {
-        return  petsService.findAllById(id);
-    }
+
+        return Optional.ofNullable(petsService.findAllById(id).orElseThrow(() -> new NotFoundException("Oshibka")));
+     }
+
+
 
     @PostMapping(value = "pets")
     public Pet savePets(@RequestBody Pet pets) {

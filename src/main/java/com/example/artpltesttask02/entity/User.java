@@ -8,7 +8,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -21,30 +23,37 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "username")
+    @Column(name = "username",unique = true)
     @Min(2)
     @Max(15)
     @NotBlank
     private String username;
 
     @Column(name = "password")
-    @Min(8)
+    @Min(6)
     @Max(32)
     @NotBlank
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @NotBlank
+    @NotNull
     private List<Pet> pets;
 
-    public User() {
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+    private Set<Role> roles;
+
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public User(Long id, String username, String password, List<Pet> pets) {
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.pets = pets;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public User() {
     }
 
     public Long getId() {

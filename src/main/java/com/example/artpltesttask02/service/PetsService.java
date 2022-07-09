@@ -41,8 +41,6 @@ public class PetsService {
         return petsRepository.save(entity);
     }
 
-
-
     public PetsRepository getPetsRepository() {
         return petsRepository;
     }

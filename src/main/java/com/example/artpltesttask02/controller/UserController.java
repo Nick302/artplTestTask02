@@ -1,10 +1,10 @@
 package com.example.artpltesttask02.controller;
 
 import com.example.artpltesttask02.entity.User;
-import com.example.artpltesttask02.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.example.artpltesttask02.service.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +12,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(value = "/api/v1/")
 public class UserController {
+
     private final UserService userService;
 
     @Autowired
@@ -30,15 +31,9 @@ public class UserController {
         return userService.findById(id);
     }
 
-    @GetMapping(value = "check/{name}")
-    public Optional<User> existsByUsername(@PathVariable String name) {
-        return userService.existsUserByUsername(name);
-    }
 
-    @PostMapping(value = "user")
-    public User saveUsers(@RequestBody User user) {
-        return userService.save(user);
-    }
+
+
 
     @PutMapping("user/{id}")
     public User updateUser(
@@ -53,5 +48,6 @@ public class UserController {
     public void removeUser(@PathVariable("id") User user) {
         userService.delete(user);
     }
+
 
 }
