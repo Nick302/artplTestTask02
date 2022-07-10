@@ -2,7 +2,6 @@ package com.example.artpltesttask02.service;
 
 import com.example.artpltesttask02.entity.User;
 import com.example.artpltesttask02.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +11,10 @@ import java.util.Optional;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-    private PasswordEncoder encoder;
 
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder encoder) {
-        this.userRepository = userRepository;
-        this.encoder = encoder;
-    }
+    private  UserRepository userRepository;
+    private  PasswordEncoder encoder;
+
 
     public List<User> findAllBy() {
         return userRepository.findAllBy();
@@ -38,10 +33,11 @@ public class UserService {
         return userRepository.save(entity);
     }
 
-    public boolean existsByUsername(String username)
-    {
-        return userRepository.existsByUsername(username);
+    public Optional<User> existsUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
+
+
 
     public UserRepository getUserRepository() {
         return userRepository;

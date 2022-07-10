@@ -1,23 +1,19 @@
 package com.example.artpltesttask02.service;
 
 import com.example.artpltesttask02.entity.Pet;
-import com.example.artpltesttask02.entity.Sex;
 import com.example.artpltesttask02.repository.PetsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class PetsService {
-    private final PetsRepository petsRepository;
 
-    @Autowired
-    public PetsService(PetsRepository petsRepository) {
-        this.petsRepository = petsRepository;
-    }
+    private PetsRepository petsRepository;
+
+
 
     /**
      * - создавать /редактировать/удалить животных [Вид(из списка-справочника), дата рождениЯ, пол, Кличка(уникальна)] .

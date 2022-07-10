@@ -1,14 +1,12 @@
 package com.example.artpltesttask02.controller;
 
 import com.example.artpltesttask02.entity.Pet;
-import com.example.artpltesttask02.entity.Sex;
 import com.example.artpltesttask02.exception.NotFoundException;
 import com.example.artpltesttask02.service.PetsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +16,7 @@ public class PetsController {
 
     private final PetsService petsService;
 
-    @Autowired
+
     public PetsController(PetsService petsService) {
         this.petsService = petsService;
     }
@@ -33,8 +31,7 @@ public class PetsController {
     public Optional<Pet> getPetsAllById(@PathVariable Long id) {
 
         return Optional.ofNullable(petsService.findAllById(id).orElseThrow(() -> new NotFoundException("Oshibka")));
-     }
-
+    }
 
 
     @PostMapping(value = "pets")
@@ -55,8 +52,6 @@ public class PetsController {
     public void removePets(@PathVariable("id") Pet pets) {
         petsService.delete(pets);
     }
-
-
 
 
 }

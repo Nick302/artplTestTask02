@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findAllBy();
 
@@ -20,9 +20,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
     @Override
     void delete(User entity);
 
-    Optional<User> existsUserByUsername(String username);
-
-    Boolean existsByUsername(String username);
+    Optional<User> findByUsername(String username);
 
 
 }

@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
@@ -16,6 +18,8 @@ import java.util.Date;
 @JsonIdentityInfo(
         generator = ObjectIdGenerators.PropertyGenerator.class,
         property = "id")
+@Getter
+@Setter
 public class Pet {
 
     @Id
@@ -42,13 +46,13 @@ public class Pet {
     @JoinColumn(name = "users")
     @NotBlank
     @JsonIdentityReference(alwaysAsId = true)
-    private User user;
+    private AppUser user;
 
     public Pet() {
 
     }
 
-    public Pet(Long id, String nickName, Date birthDay, Sex sex, User user) {
+    public Pet(Long id, String nickName, Date birthDay, Sex sex, AppUser user) {
         this.id = id;
         this.nickName = nickName;
         this.birthDay = birthDay;
@@ -56,43 +60,5 @@ public class Pet {
         this.user = user;
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNickName() {
-        return nickName;
-    }
-
-    public void setNickName(String nickName) {
-        this.nickName = nickName;
-    }
-
-    public Date getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(Date birthDay) {
-        this.birthDay = birthDay;
-    }
-
-    public Sex getSex() {
-        return sex;
-    }
-
-    public void setSex(Sex sex) {
-        this.sex = sex;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

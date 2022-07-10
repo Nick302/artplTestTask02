@@ -1,12 +1,9 @@
 package com.example.artpltesttask02.repository;
 
 import com.example.artpltesttask02.entity.Pet;
-import com.example.artpltesttask02.entity.Sex;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 

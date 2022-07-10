@@ -1,10 +1,10 @@
 package com.example.artpltesttask02.controller;
 
 import com.example.artpltesttask02.entity.User;
+import com.example.artpltesttask02.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.example.artpltesttask02.service.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +15,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -30,9 +30,6 @@ public class UserController {
     public Optional<User> getById(@PathVariable Long id) {
         return userService.findById(id);
     }
-
-
-
 
 
     @PutMapping("user/{id}")
