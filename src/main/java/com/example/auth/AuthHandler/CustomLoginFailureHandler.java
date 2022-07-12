@@ -24,7 +24,6 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
                                         AuthenticationException exception) throws IOException, ServletException {
         String email = request.getParameter("email");
         AppUser user = userService.findAllByEmail(email);
-
         if (user != null) {
             if (user.isEnabled() && user.isAccountNonLocked()) {
                 if (user.getFailedAttempt() < UserService.MAX_FAILED_ATTEMPTS - 1) {
@@ -41,7 +40,6 @@ public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHan
             }
 
         }
-
         super.setDefaultFailureUrl("/login?error");
         super.onAuthenticationFailure(request, response, exception);
     }

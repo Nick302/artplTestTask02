@@ -36,7 +36,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(path = "login")
+    @GetMapping(path = "login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
         try {
             AppUser appUser = loginService.login(loginRequest.getEmail(), loginRequest.getPassword());

@@ -50,7 +50,6 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppUserRole role = AppUserRole.USER;
 
-
     @Column(name = "enabled")
     private boolean enabled;
 
@@ -112,7 +111,7 @@ public class AppUser implements UserDetails {
     }
 
     public AppUser getUser() {
-        return user;
+        return this.user;
     }
 
     public void setUser(AppUser user) {
