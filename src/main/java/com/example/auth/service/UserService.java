@@ -7,12 +7,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class UserService {
 
+    public static final int MAX_FAILED_ATTEMPTS = 10;
+    private static final long LOCK_TIME_DURATION = 60 * 60 * 1000;
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
@@ -20,6 +25,35 @@ public class UserService {
     public UserService(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.encoder = encoder;
+    }
+
+    public void increaseFailedAttempts(AppUser user) {
+        int newFailAttempts = user.getFailedAttempt() + 1;
+        userRepository.updateFailedAttempts(newFailAttempts, user.getEmail());
+    }
+
+    public void resetFailedAttempts(String email) {
+        userRepository.updateFailedAttempts(0, email);
+    }
+
+    public void lock(AppUser user) {
+        user.setAccountNonLocked(false);
+        user.setLockTime(new Date());
+        userRepository.save(user);
+    }
+
+    public boolean unlockWhenTimeExpired(AppUser user) {
+        long lockTimeInMillis = user.getLockTime().getTime();
+        long currentTimeInMillis = System.currentTimeMillis();
+
+        if (lockTimeInMillis + LOCK_TIME_DURATION < currentTimeInMillis) {
+            user.setAccountNonLocked(true);
+            user.setLockTime(null);
+            user.setFailedAttempt(0);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
     }
 
     public List<AppUser> findAll() {
@@ -39,8 +73,12 @@ public class UserService {
         return userRepository.save(entity);
     }
 
-    public Optional<AppUser> findByUsername(String username) {
-        return userRepository.findByEmail(username);
+    public Optional<AppUser> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public AppUser findAllByEmail(String email) {
+        return userRepository.findAllByEmail(email);
     }
 
 

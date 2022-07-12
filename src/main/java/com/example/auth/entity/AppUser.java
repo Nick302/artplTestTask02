@@ -12,6 +12,7 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -49,15 +50,24 @@ public class AppUser implements UserDetails {
     @Enumerated(EnumType.STRING)
     private AppUserRole role = AppUserRole.USER;
 
-    @Column(name = "locked")
-    private boolean locked;
 
     @Column(name = "enabled")
     private boolean enabled;
 
+    @Column(name = "account_non_locked")
+    private boolean accountNonLocked;
+
+    @Column(name = "failed_attempt")
+    private int failedAttempt;
+
+    @Column(name = "lock_time")
+    private Date lockTime;
+
     @OneToMany(mappedBy = "app_user", fetch = FetchType.LAZY)
     @NotNull
     private List<Pet> pets;
+    @Transient
+    private AppUser user;
 
     public AppUser(RegistrationRequest registrationRequest) {
         this.name = registrationRequest.getName();
@@ -88,7 +98,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !locked;
+        return accountNonLocked;
     }
 
     @Override
@@ -99,5 +109,13 @@ public class AppUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 }
