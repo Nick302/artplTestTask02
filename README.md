@@ -1,5 +1,6 @@
 # artplTestTask02
-artplTestTask02 - test task 
+artplTestTask02 - test task
+Буду развивать дальше как пет проект и добавлю JWT + HATEOAS + тесты
 <hr>
 <br>
 Methods for create users
