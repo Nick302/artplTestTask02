@@ -29,6 +29,7 @@ public class AuthController {
     public ResponseEntity<?> registration(@RequestBody RegistrationRequest registrationRequest, HttpServletResponse response) {
         try {
             AppUser appUser = registrationService.register(registrationRequest);
+            appUser.setAccountNonLocked(true);
             return buildUserResponse(appUser);
         } catch (Exception e) {
             return buildErrorResponse(e.getLocalizedMessage());

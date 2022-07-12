@@ -2,6 +2,7 @@ package com.example.auth.access;
 
 import com.example.auth.AuthHandler.CustomLoginFailureHandler;
 import com.example.auth.AuthHandler.CustomLoginSuccessHandler;
+import com.example.auth.service.AppUserDetailsService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -15,11 +16,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 @EnableWebSecurity(debug = false)
 @AllArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
     private CustomLoginFailureHandler loginFailureHandler;
     @Autowired
     private CustomLoginSuccessHandler loginSuccessHandler;
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -45,5 +46,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
 }

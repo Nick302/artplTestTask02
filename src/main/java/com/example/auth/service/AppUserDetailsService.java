@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AppUserDetailsService implements UserDetailsService {
@@ -18,8 +20,13 @@ public class AppUserDetailsService implements UserDetailsService {
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public AppUser loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    public AppUser loadUserByUsername(String email) throws UsernameNotFoundException {
+
+
+        return userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException
+                        ("User not found"));
     }
 
     public AppUser signUpUser(AppUser appUser) {
@@ -47,5 +54,13 @@ public class AppUserDetailsService implements UserDetailsService {
 
     public AppUser retrieveFromCache(String email) {
         return (AppUser) new CachingUserDetailsService(this).loadUserByUsername(email);
+    }
+
+    public List<AppUser> getAll() {
+        return this.userRepository.findAll();
+    }
+
+    public AppUser getByEmail(String email) {
+        return this.userRepository.findAllByEmail(email);
     }
 }

@@ -98,7 +98,7 @@ public class AppUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return !accountNonLocked;
     }
 
     @Override

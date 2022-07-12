@@ -39,7 +39,7 @@ public class UserService {
     public void lock(AppUser user) {
         user.setAccountNonLocked(false);
         user.setLockTime(new Date());
-        userRepository.save(user);
+        userRepository.saveAndFlush(user);
     }
 
     public boolean unlockWhenTimeExpired(AppUser user) {
@@ -50,7 +50,7 @@ public class UserService {
             user.setAccountNonLocked(true);
             user.setLockTime(null);
             user.setFailedAttempt(0);
-            userRepository.save(user);
+            userRepository.saveAndFlush(user);
             return true;
         }
         return false;
