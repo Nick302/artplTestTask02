@@ -30,6 +30,7 @@ public class UserService {
     public void increaseFailedAttempts(AppUser user) {
         int newFailAttempts = user.getFailedAttempt() + 1;
         userRepository.updateFailedAttempts(newFailAttempts, user.getEmail());
+        System.out.println("User: " + user +" bad enter to account " + newFailAttempts);
     }
 
     public void resetFailedAttempts(String email) {
@@ -39,7 +40,7 @@ public class UserService {
     public void lock(AppUser user) {
         user.setAccountNonLocked(false);
         user.setLockTime(new Date());
-        userRepository.saveAndFlush(user);
+        userRepository.save(user);
     }
 
     public boolean unlockWhenTimeExpired(AppUser user) {
@@ -50,7 +51,7 @@ public class UserService {
             user.setAccountNonLocked(true);
             user.setLockTime(null);
             user.setFailedAttempt(0);
-            userRepository.saveAndFlush(user);
+            userRepository.save(user);
             return true;
         }
         return false;
