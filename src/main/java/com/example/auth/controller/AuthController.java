@@ -37,7 +37,7 @@ public class AuthController {
     }
 
     @GetMapping(path = "login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest, HttpServletResponse response , @RequestParam(name = "email") String email) {
         try {
             AppUser appUser = loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
             return buildUserResponse(appUser);

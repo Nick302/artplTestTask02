@@ -16,13 +16,17 @@ import java.io.IOException;
 @Component
 public class CustomLoginFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public CustomLoginFailureHandler(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response,
                                         AuthenticationException exception) throws IOException, ServletException {
-        String email = request.getParameter("email");
+        String email =   request.getHeader("email");
         AppUser user = userService.findAllByEmail(email);
         if (user != null) {
             if (user.isEnabled() && user.isAccountNonLocked()) {

@@ -26,15 +26,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/login", "/api/v1/auth/registration", "/api/v1/auth/current", "/api/v1/auth/check/**").permitAll()
+                .antMatchers("/api/v1/auth/login",
+                        "/api/v1/auth/registration",
+                        "/api/v1/auth/current",
+                        "/api/v1/auth/check/**",
+                        "/api/v1/**"
+                        ).permitAll()
                 .anyRequest()
                 .authenticated();
-//                .and()
-//                .formLogin().permitAll()
-//                .loginPage("/api/v1/auth/login")
-//                .failureHandler(loginFailureHandler)
-//                .successHandler(loginSuccessHandler)
-//                .permitAll();
+/*                .and()
+                .formLogin()
+                .usernameParameter("email")
+                .failureHandler(loginFailureHandler)
+                .successHandler(loginSuccessHandler)
+                .permitAll();*/
 
     }
 

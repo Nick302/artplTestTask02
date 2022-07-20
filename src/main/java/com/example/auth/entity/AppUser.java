@@ -65,8 +65,8 @@ public class AppUser implements UserDetails {
     @OneToMany(mappedBy = "app_user", fetch = FetchType.LAZY)
     @NotNull
     private List<Pet> pets;
-    @Transient
-    private AppUser user;
+
+
 
     public AppUser(RegistrationRequest registrationRequest) {
         this.name = registrationRequest.getName();
@@ -110,11 +110,5 @@ public class AppUser implements UserDetails {
         return enabled;
     }
 
-    public AppUser getUser() {
-        return this.user;
-    }
 
-    public void setUser(AppUser user) {
-        this.user = user;
-    }
 }
